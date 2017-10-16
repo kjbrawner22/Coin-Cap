@@ -9,10 +9,12 @@ import { APIData } from '../services/apidata';
 })
 export class HomePage {
 
-  coins: any;
+  coins: any = [""];
 
   constructor(public navCtrl: NavController, apidata: APIData) {
-      this.coins = apidata.getCoins();
+      while(apidata.getCoins() == null) {}
+      console.log(this.coins = apidata.getCoins());
+      console.log("coins is defined");
   }
 
 }
