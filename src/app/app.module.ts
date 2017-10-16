@@ -8,7 +8,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { FavoritesPage } from '../pages/favorites/favorites';
-import { InfoPage } from '../pages/info/info'
+import { InfoPage } from '../pages/info/info';
+
+import { APIData } from '../pages/services/apidata';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { InfoPage } from '../pages/info/info'
   providers: [
     StatusBar,
     SplashScreen,
+    APIData,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

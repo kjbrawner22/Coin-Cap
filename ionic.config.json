@@ -1,6 +1,6 @@
 {
   "name": "Coin-Cap",
-  "app_id": "",
+  "app_id": "fe9eace0",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

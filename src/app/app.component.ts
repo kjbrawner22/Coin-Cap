@@ -8,6 +8,8 @@ import { HomePage } from '../pages/home/home';
 import { FavoritesPage } from '../pages/favorites/favorites'
 import { InfoPage } from '../pages/info/info'
 
+import { APIData } from '../pages/services/apidata';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -16,10 +18,9 @@ export class MyApp {
   rootPage:any = HomePage;
 
   pages: Array<{title: string, component: any}>;
-  data: any;
 
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public http: HttpClient) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public http: HttpClient, public api: APIData) {
     this.initializeApp();
     this.APIDataRetrieval();
 
@@ -48,8 +49,8 @@ export class MyApp {
     this.http.get("https:api.coinmarketcap.com/v1/ticker/").subscribe(
       data => {
         //JSON Response
-        this.data = data;
-        console.log(data);
+        this.api.setCoins(data);
+        console.log(this.api.getCoin(0));
       },
       err => {
         console.log("error");
