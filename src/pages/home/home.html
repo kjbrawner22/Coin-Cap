@@ -11,8 +11,8 @@
 
 <ion-content padding>
   <ion-list no-lines>
-    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-      {{ item }}
+    <button ion-item *ngFor="let coin of coins" (click)="itemSelected(item)">
+      {{ coin.name + "(" + coin.symbol + ")" }}
     </button>
   </ion-list>
 </ion-content>

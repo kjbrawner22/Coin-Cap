@@ -9,13 +9,26 @@ import { APIData } from '../../services/apidata';
 })
 export class HomePage {
 
-  coins: any = [""];
+  coins: any;
 
-  constructor(public navCtrl: NavController, apidata: APIData) {
+  constructor(public navCtrl: NavController, public apidata: APIData) {
       apidata.APIDataRetrieval();
-      while(apidata.getCoins() == null) {}
+      this.coins = [""];
       console.log(this.coins = apidata.getCoins());
       console.log("coins is defined");
+  }
+
+  onUpdate() {
+    this.apidata.APIDataRetrieval();
+    this.coins = apidata.getCoins();
+  }
+
+  ionViewDidEnter() {
+    if (this.coins == null) {
+      coins = [""];
+    } else {
+      coins = this.apidata.getCoins()
+    }
   }
 
 }

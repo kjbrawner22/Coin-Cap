@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 export class APIData {
 
   coins: any;
-  lastUpdate: Date();
+  lastUpdate: Date;
 
   constructor(public http: HttpClient) {
     this.coins = [""];
@@ -31,11 +31,14 @@ export class APIData {
         //JSON Response
         var d = new Date();
         //only allow 6 updates per minute
-        if (this.lastUpdate.getDate() != d.getDate() || this.lastUpdate.getTime() < d.getTime() + 10000) {
-          this.setCoins(data);
-          console.log(this.getCoin(0));
-        } else {
-          console.log("too short of update time");
+        if(this.lastUpdate != null) {
+          if (this.lastUpdate.getDate() != d.getDate() || this.lastUpdate.getTime() < d.getTime() + 10000) {
+            this.setCoins(data);
+            this.lastUpdate = d;
+            console.log(this.getCoin(0));
+          } else {
+            console.log("too short of update time");
+          }
         }
       },
       err => {
