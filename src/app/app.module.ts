@@ -10,7 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { InfoPage } from '../pages/info/info';
 
-import { APIData } from '../pages/services/apidata';
+import { APIData } from '../services/apidata';
 
 @NgModule({
   declarations: [
