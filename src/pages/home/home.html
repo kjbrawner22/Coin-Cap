@@ -10,9 +10,18 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+    [(ngModel)]="myInput"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput($event)">
+  </ion-searchbar>
   <ion-list no-lines>
-    <button ion-item *ngFor="let coin of coins" (click)="itemSelected(item)">
-      {{ coin.name + "(" + coin.symbol + ")" }}
+    <button ion-item *ngFor="let coin of coins" (click)="coinSelected()">
+      {{ coin.rank + ". " }}<i class="cc {{ coin.symbol }}"></i>{{ " " + coin.name + "(" + coin.symbol + ")" }}
+      <p item-end>{{ coin.percent_change_24h  + "%"}}</p>
     </button>
   </ion-list>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController } from 'ionic-angular';
+
 
 import { APIData } from '../../services/apidata';
 
@@ -11,23 +12,41 @@ export class HomePage {
 
   coins: any;
 
-  constructor(public navCtrl: NavController, public apidata: APIData) {
-      apidata.APIDataRetrieval();
-      this.coins = [""];
-      console.log(this.coins = apidata.getCoins());
-      console.log("coins is defined");
+  constructor(public navCtrl: NavController, public apidata: APIData, public loadCtrl: LoadingController, public toastCtrl: ToastController) { }
+
+  ionViewDidLoad() {
+    this.loadData();
   }
 
-  onUpdate() {
-    this.apidata.APIDataRetrieval();
-    this.coins = apidata.getCoins();
+  loadData() {
+    this.coins = this.apidata.APIDataRetrieval(this.toastCtrl, this.loadCtrl);
+}
+
+  doRefresh(refresher) {
+    this.coins = this.apidata.APIDataRetrieval(this.toastCtrl);
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
   }
 
-  ionViewDidEnter() {
-    if (this.coins == null) {
-      coins = [""];
-    } else {
-      coins = this.apidata.getCoins()
+  coinSelected(coin) {
+    
+  }
+
+  onInput(ev: any) {
+    // Reset items back to all of the items
+    this.coins = this.apidata.getCoins();
+
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.coins = this.coins.filter((item) => {
+        return ((item.name.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
+                (item.symbol.toLowerCase().indexOf(val.toLowerCase()) > -1));
+      });
     }
   }
 

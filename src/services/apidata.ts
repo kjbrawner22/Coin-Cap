@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class APIData {
@@ -25,26 +26,32 @@ export class APIData {
     return this.coins[index];
   }
 
-  APIDataRetrieval() {
+  APIDataRetrieval(toastCtrl, loadCtrl?: LoadingController) {
+    if (loadCtrl != null) {
+      const loading = loadCtrl.create({
+      content: 'Loading Data...'
+      });
+
+      loading.present();
+    }
     this.http.get("https:api.coinmarketcap.com/v1/ticker/").subscribe(
       data => {
         //JSON Response
-        var d = new Date();
-        //only allow 6 updates per minute
-        if(this.lastUpdate != null) {
-          if (this.lastUpdate.getDate() != d.getDate() || this.lastUpdate.getTime() < d.getTime() + 10000) {
-            this.setCoins(data);
-            this.lastUpdate = d;
-            console.log(this.getCoin(0));
-          } else {
-            console.log("too short of update time");
-          }
-        }
+        this.setCoins(data);
       },
       err => {
         console.log("error");
+        const toast = toastCtrl.create({
+          message: 'An Error Occurred While Trying to Receive Data',
+          duration: 3000,
+        });
+        toast.present();
       }
     );
+    if (loadCtrl != null) {
+      loading.dismiss();
+    }
+    return this.coins;
   }
 
 }
